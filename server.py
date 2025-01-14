@@ -12,6 +12,10 @@ def emotion_detector_route():
     text_to_analyze = request.form.get('text')  # Get the text input from the user
     if text_to_analyze:
         result = emotion_detector(text_to_analyze)
+         
+        if  result['dominant_emotion'] is None:
+            return "Invalid text! Please try again."
+    
         formated_response = {
             "anger": result['anger'],
             "disgust": result['disgust'],
@@ -20,6 +24,7 @@ def emotion_detector_route():
             "sadness": result['sadness'],
             "dominant_emotion": result['dominant_emotion']
         }
+        
         return (
         f"For the given statement, the system response is 'anger': {formated_response['anger']} "
         f"'disgust': {formated_response['disgust']}, 'fear': {formated_response['fear']}, "
